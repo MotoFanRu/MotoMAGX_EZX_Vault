@@ -27,17 +27,20 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "duke3d.h"
 #include "control.h"
 #include "mouse.h"
+#if defined(GP2X)
 #include "joystick.h"
-
+#endif
 //***************************************************************************
 // FIXME  These will need to be removed once the buildengine directory
 //        structure is figured out and we move to unified SDL codebase
+#if defined(GP2X)
 void _joystick_init(void);
 void _joystick_deinit(void);
 int _joystick_update(void);
 int _joystick_axis(int axis);
 int _joystick_button(int button);
 int _joystick_hat(int hat);
+#endif
 //#include "buildengine/display.h"
 //***************************************************************************
 
@@ -49,22 +52,25 @@ int _joystick_hat(int hat);
 
 boolean  CONTROL_RudderEnabled;
 boolean  CONTROL_MousePresent;
-boolean  CONTROL_JoysPresent[ MaxJoys ];
 boolean  CONTROL_MouseEnabled;
 boolean  CONTROL_JoystickEnabled;
 byte     CONTROL_JoystickPort;
+#if defined(GP2X)
+boolean  CONTROL_JoysPresent[ MaxJoys ];
+#endif
 uint32   CONTROL_ButtonState1;
 uint32   CONTROL_ButtonHeldState1;
 uint32   CONTROL_ButtonState2;
 uint32   CONTROL_ButtonHeldState2;
 
-uint32   CONTROL_JoyHatState[MAXJOYHATS];
-
 static short mouseButtons = 0;
 static short lastmousebuttons = 0;
 
+#if defined(GP2X)
+uint32   CONTROL_JoyHatState[MAXJOYHATS];
 static short joyHats[MAXJOYHATS];
 static short lastjoyHats[MAXJOYHATS];
+#endif
 
 //***************************************************************************
 //
@@ -84,11 +90,13 @@ struct _KeyMapping
 static int32 MouseMapping[MAXMOUSEBUTTONS];
 
 // Joystick/Gamepad bindings
+#if defined(GP2X)
 static int32 JoyAxisMapping[MAXJOYAXES];
 static int32 JoyHatMapping[MAXJOYHATS][8];
 static int32 JoyButtonMapping[MAXJOYBUTTONS];
 static float JoyAnalogScale[MAXJOYAXES];
 static int32 JoyAnalogDeadzone[MAXJOYAXES];
+#endif
 
 static void SETBUTTON(int i)
 {
@@ -181,6 +189,7 @@ void CONTROL_MapButton
 
 void CONTROL_MapJoyButton(int32 whichfunction, int32 whichbutton, boolean doubleclicked)
 {
+#if defined(GP2X)
     if(whichbutton < 0 || whichbutton >= MAXJOYBUTTONS)
     {
         return;
@@ -190,16 +199,19 @@ void CONTROL_MapJoyButton(int32 whichfunction, int32 whichbutton, boolean double
        return; // TODO
 
     JoyButtonMapping[whichbutton] = whichfunction;
+#endif
 }
 
 void CONTROL_MapJoyHat(int32 whichfunction, int32 whichhat, int32 whichvalue)
 {
+#if defined(GP2X)
     if(whichhat < 0 || whichhat >= MAXJOYHATS)
     {
         return;
     }
 
     JoyHatMapping[whichhat][whichvalue] = whichfunction;
+#endif
 }
 
 void CONTROL_DefineFlag( int32 which, boolean toggle )
@@ -277,6 +289,7 @@ void CONTROL_GetInput( ControlInfo *info )
     }
     lastmousebuttons = mouseButtons;
 
+#if defined(GP2X)
     // update stick state.
     if ((CONTROL_JoystickEnabled) && (_joystick_update()))
     {
@@ -374,6 +387,7 @@ void CONTROL_GetInput( ControlInfo *info )
 	  }
         }
     }
+#endif
 }
 
 void CONTROL_ClearButton( int32 whichbutton )
@@ -426,6 +440,7 @@ void CONTROL_Startup
    int32 ticspersecond
    )
 {
+#if defined(GP2X)
     int i;
 
     _joystick_init();
@@ -435,11 +450,17 @@ void CONTROL_Startup
 	    joyHats[i] = 0;
 	    lastjoyHats[i] = 0;
     }
+#else
+    CONTROL_JoystickEnabled = 0;
+    CONTROL_JoystickPort = 0;
+#endif
 }
 
 void CONTROL_Shutdown( void )
 {
+#if defined(GP2X)
     _joystick_deinit();
+#endif
 }
 
 
@@ -449,10 +470,12 @@ void CONTROL_MapAnalogAxis
    int32 whichanalog
    )
 {
+#if defined(GP2X)
     if(whichaxis < MAXJOYAXES)
     {
         JoyAxisMapping[whichaxis] = whichanalog;
     }
+#endif
 }
 
 
@@ -472,11 +495,13 @@ void CONTROL_SetAnalogAxisScale
    float axisscale
    )
 {
+#if defined(GP2X)
     if(whichaxis < MAXJOYAXES)
     {
         // Set it... make sure we don't let them set it to 0.. div by 0 is bad.
         JoyAnalogScale[whichaxis] = (axisscale == 0) ? 1.0f : axisscale;
     }
+#endif
 }
 
 void CONTROL_SetAnalogAxisDeadzone
@@ -485,11 +510,13 @@ void CONTROL_SetAnalogAxisDeadzone
    int32 axisdeadzone
    )
 {
+#if defined(GP2X)
     if(whichaxis < MAXJOYAXES)
     {
         // Set it... 
         JoyAnalogDeadzone[whichaxis] = axisdeadzone;
     }
+#endif
 }
 
 int32 CONTROL_FilterDeadzone
@@ -498,16 +525,18 @@ int32 CONTROL_FilterDeadzone
    int32 axisdeadzone
    )
 {
+#if defined(GP2X)
     if((axisvalue < axisdeadzone) && (axisvalue > -axisdeadzone))
     {
         return 0;
     }
-
+#endif
     return axisvalue;
 }
 
 int32 CONTROL_GetFilteredAxisValue(int32 axis)
 {
+#if defined(GP2X)
 return (int32)((float)CONTROL_FilterDeadzone
                                     (
                                         _joystick_axis(axis), 
@@ -515,6 +544,9 @@ return (int32)((float)CONTROL_FilterDeadzone
                                     )
                                         * JoyAnalogScale[axis]
                                     );
+#else
+    return 0;
+#endif
 }
 
 void CONTROL_PrintAxes( void )
@@ -584,11 +616,13 @@ void    MOUSE_GetDelta( int32*x, int32*y  )
 
 void JOYSTICK_UpdateHats()
 {
+#if defined(GP2X)
        int i;
 
        for(i=0; i<MAXJOYHATS; i++)
        {
                joyHats[i] = _joystick_hat(i);
        }
+#endif
 }
 

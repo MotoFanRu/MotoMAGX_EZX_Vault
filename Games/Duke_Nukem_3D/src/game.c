@@ -2082,8 +2082,10 @@ void gameexit(char *msg)
     platform_exit();
 #endif
 
+#if defined(GP2X)
     chdir("/usr/gp2x");
     execl("/usr/gp2x/gp2xmenu","gp2xmenu",NULL);
+#endif
 
     exit(0);
 }

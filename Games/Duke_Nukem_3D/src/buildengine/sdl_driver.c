@@ -828,6 +828,7 @@ static int root_sdl_event_filter(const SDL_Event *event)
     return(1);
 } /* root_sdl_event_filter */
 
+#if defined(GP2X)
 #define	PEPC_VK_UP				(1<<0)	
 #define	PEPC_VK_UP_LEFT			(1<<1)	
 #define	PEPC_VK_LEFT		(1<<2)	
@@ -902,12 +903,13 @@ static int sdlSDL_gp2x_key_old_status[]= {
 		SDL_RELEASED,
 		SDL_RELEASED	
 	};
-
+#endif
 
 static void handle_events(void)
 {
     SDL_Event event;
 
+#if defined(GP2X)
 	int i,ret=0;
 	SDL_keysym keysym;
 	unsigned long key=0;
@@ -958,6 +960,7 @@ static void handle_events(void)
 		
 
 	}
+#endif
 
     while (SDL_PollEvent(&event))
         root_sdl_event_filter(&event);
@@ -973,7 +976,7 @@ void _handle_events(void)
     handle_events();
 } /* _handle_events */
 
-
+#if defined(GP2X)
 static SDL_Joystick *joystick = NULL;
 void _joystick_init(void)
 {
@@ -1086,7 +1089,7 @@ int _joystick_button(int button)
 
     return(SDL_JoystickGetButton(joystick, button) != 0);
 } /* _joystick_button */
-
+#endif
 
 unsigned char _readlastkeyhit(void)
 {
@@ -2721,16 +2724,20 @@ W*/
 
 void initkeys(void)
 {
+#if defined(GP2X)
 	joyfd = open("/dev/GPIO", O_RDWR | O_NDELAY );
 
     /* does nothing in SDL. Key input handling is set up elsewhere. */
     /* !!! why not here? */
+#endif
 }
 
 void uninitkeys(void)
 {
+#if defined(GP2X)
   close(joyfd);
     /* does nothing in SDL. Key input handling is set up elsewhere. */
+#endif
 }
 
 void set16color_palette(void)
