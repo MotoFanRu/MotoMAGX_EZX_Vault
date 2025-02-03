@@ -36,6 +36,39 @@
 #include "pragmas.h"
 #include "engine.h"
 
+#if defined(EZX)
+// EXL, 03-Feb-2025: See https://motoezx.at.ua/load/8-1-0-32 for this hacks
+
+#include "../fx_man.h"
+
+int EZX_SDL_PollEvent(SDL_Event *event)  {
+    int _r= SDL_PollEvent(event);
+    if (!_r)
+        return 0;
+    if (event->type == SDL_ACTIVEEVENT) {
+        if (event->active.state == SDL_APPINPUTFOCUS && !event->active.gain) {
+            FX_SuspendAudio();
+            for (;;) {
+                _r = SDL_WaitEvent(event);
+                if (!_r)
+                    continue;
+                if (event->type == SDL_QUIT)
+                    return 1;
+                if (event->type != SDL_ACTIVEEVENT)
+                    continue;
+                if (event->active.state == SDL_APPINPUTFOCUS && event->active.gain) {
+                    FX_ResumeAudio();
+                    return 1;
+                }
+            }
+        }
+    }
+  return _r;
+}
+#else
+static inline int EZX_SDL_PollEvent(SDL_Event *event) { return SDL_PollEvent(event); }
+#endif
+
 #if (defined USE_OPENGL)
 #include "buildgl.h"
 #endif
@@ -979,7 +1012,7 @@ static void handle_events(void)
 	}
 #endif
 
-    while (SDL_PollEvent(&event))
+    while (EZX_SDL_PollEvent(&event))
         root_sdl_event_filter(&event);
 
 #if defined(EZX) || defined(MAGX)

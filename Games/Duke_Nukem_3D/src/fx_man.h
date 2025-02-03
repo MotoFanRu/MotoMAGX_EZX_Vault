@@ -133,4 +133,7 @@ void PlayMusic(char *_filename);
 //  Implicitly stops all playing sounds and music. --ryan.
 void FX_CleanCache(void);
 
+void FX_SuspendAudio(void);
+int FX_ResumeAudio(void);
+
 #endif

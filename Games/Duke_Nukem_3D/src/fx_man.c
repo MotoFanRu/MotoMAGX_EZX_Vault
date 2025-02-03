@@ -491,7 +491,6 @@ int FX_Init(int SoundCard, int numvoices, int numchannels,
     return(FX_Ok);
 } // FX_Init
 
-
 void FX_CleanCache(void)
 {
     int total = 0;
@@ -515,6 +514,24 @@ void FX_CleanCache(void)
     snddebug("cached chunks deallocation complete. (%d) were deleted.", total);
 } // FX_CleanCache
 
+void FX_SuspendAudio(void)
+{
+#if defined(EZX)
+    Mix_SuspendAudio();
+#endif
+}
+
+int FX_ResumeAudio(void)
+{
+#if defined(EZX)
+    int r = Mix_ResumeAudio();
+    if (r == -1) {
+        Mix_CloseAudio();
+        return -1;
+    }
+#endif
+    return 0;
+}
 
 int FX_Shutdown( void )
 {
