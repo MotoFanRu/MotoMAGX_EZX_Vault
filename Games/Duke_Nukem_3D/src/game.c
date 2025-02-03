@@ -7270,6 +7270,10 @@ void Startup(void)
 
 // CTW END - MODIFICATION
    inittimer(120); // 120 is tick rate - what should this be on the gp2x?
+   const char *envr = getenv("BUILD_FPS");
+   if (envr) {
+    ud.tickrate = 1;
+   }
 
    initkeys();
 
