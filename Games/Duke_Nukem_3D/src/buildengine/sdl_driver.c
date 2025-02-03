@@ -1021,7 +1021,7 @@ static void handle_events(void)
             release_key_delay_ezx_motomagx_hack--;
 
             if (release_key_delay_ezx_motomagx_hack == 0) {
-                fprintf(stderr, "EZX & MotoMAGX: Clear SDLK_ESCAPE and SDLK_SPACE Keys!\n");
+//                fprintf(stderr, "EZX & MotoMAGX: Clear SDLK_ESCAPE and SDLK_SPACE Keys!\n");
                 lastkey = scancodes[SDLK_ESCAPE] + 128;
                 keyhandler();
                 lastkey = scancodes[SDLK_SPACE] + 128;
