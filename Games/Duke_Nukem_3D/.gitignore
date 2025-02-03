@@ -1,4 +1,11 @@
 *.o
 *.obj
 libSDL_mixer.so
+
 duke3d
+duke3d.grp
+
+DukeNukem3D_EZX
+DukeNukem3D_MAGX
+DukeNukem3D_EZX.mpkg
+DukeNukem3D_MAGX.mgx
