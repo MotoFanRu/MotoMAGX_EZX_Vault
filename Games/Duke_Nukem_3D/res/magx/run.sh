@@ -4,13 +4,9 @@ LIBDIR1="/ezxlocal/download/mystuff/games/lib"
 LIBDIR2="/mmc/mmca1/games/lib"
 LIBDIR3="$mypath/lib"
 
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$LIBDIR1:$LIBDIR2:$LIBDIR3"
 export HOME="$mypath"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$LIBDIR1:$LIBDIR2:$LIBDIR3"
 export SDL_QT_INVERT_ROTATION=1
-
-cd "$mypath" || exit 1
-sleep 1
-
 # Show FPS in game.
 export BUILD_FPS=1
 
@@ -18,17 +14,21 @@ export BUILD_FPS=1
 MLIBDIR="/usr/mlib/SDL"
 if [ -d "$MLIBDIR" ]; then
 	if [ -d "$LIBDIR2" ]; then
+		echo "Mounting "$LIBDIR2" to "$MLIBDIR"..."
 		busybox mount -o bind "$LIBDIR2" "$MLIBDIR"
 	else
+		echo "Mounting "$LIBDIR1" to "$MLIBDIR"..."
 		busybox mount -o bind "$LIBDIR1" "$MLIBDIR"
 	fi
 fi
 
-# Execute the game
-exec "$mypath/duke3d"
+cd "$mypath" || exit 1
+sleep 1
 
-# Unmount the library directory if exec fails
+# Execute!
+"$mypath/duke3d"
+
 if [ -d "$MLIBDIR" ]; then
-	echo 'Unmounting "$MLIBDIR"...'
+	echo "Unmounting "$MLIBDIR"..."
 	busybox umount "$MLIBDIR"
 fi
