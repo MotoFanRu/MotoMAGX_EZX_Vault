@@ -115,8 +115,9 @@ void tracers(long x1,long y1,long z1,long x2,long y2,long z2,long n)
 	 yv = (y2-y1)/i;
 	 zv = (z2-z1)/i;
 
-     if( ( klabs(x1-x2)+klabs(y1-y2) ) < 3084 )
+     if( ( klabs(x1-x2)+klabs(y1-y2) ) < 3084 ) {
          return;
+     }
 
 	 for(i=n;i>0;i--)
 	 {
@@ -3179,7 +3180,7 @@ void processinput(short snum)
                     {
                         case 0:
 
-                            if(lz >= 0 && (lz&(MAXSPRITES-1))==49152 )
+                            if(lz >= 0 && (lz&49152)==49152 )
                                 j = sprite[lz&(MAXSPRITES-1)].picnum;
                             else j = sector[psect].floorpicnum;
 

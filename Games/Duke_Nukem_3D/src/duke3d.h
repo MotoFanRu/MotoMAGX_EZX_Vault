@@ -300,12 +300,12 @@ enum USRHOOKS_Errors
 #endif
 typedef struct
 {
-    signed char avel GCC_PACK1_EXT;
-    signed char horz GCC_PACK1_EXT;
-    short fvel GCC_PACK1_EXT;
-    short svel GCC_PACK1_EXT;
-    unsigned long bits GCC_PACK1_EXT;
-} input;
+    signed char avel;
+    signed char horz;
+    short fvel;
+    short svel;
+    unsigned long bits;
+} GCC_PACK1_EXT input;
 #if HAVE_PRAGMA_PACK
 #pragma pack(pop)
 #endif

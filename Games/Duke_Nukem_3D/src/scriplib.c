@@ -490,7 +490,7 @@ void SCRIPT_Save (int32 scripthandle, char * filename)
 	SCRIPT_recursivewrite (head, fp);
 
 	fflush(fp);
-	fsync(fp);
+	fsync(fileno(fp));
 	fclose (fp);
 }
 

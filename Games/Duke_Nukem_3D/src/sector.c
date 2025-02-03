@@ -337,12 +337,14 @@ long getanimationgoal(long *animptr)
 	long i, j;
 
 	j = -1;
-    for(i=animatecnt-1;i>=0;i--)
-        if (animptr == (long *)animateptr[i])
+	for(i=animatecnt-1;i>=0;i--)
+	{
+		if (animptr == (long *)animateptr[i])
 		{
 			j = i;
 			break;
 		}
+	}
 	return(j);
 }
 

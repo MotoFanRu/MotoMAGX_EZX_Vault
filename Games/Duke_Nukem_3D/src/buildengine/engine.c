@@ -3923,11 +3923,12 @@ void nextpage(void)
    		for(i=permtail;i!=permhead;i=((i+1)&(MAXPERMS-1)))
    		{
    			per = &permfifo[i];
-   			if (per->pagesleft >= 130)
+   			if (per->pagesleft >= 130) {
    				dorotatesprite(per->sx,per->sy,per->z,per->a,per->picnum,
    									per->dashade,per->dapalnum,per->dastat,
    									per->cx1,per->cy1,per->cx2,per->cy2);
-				if (per->pagesleft&127) per->pagesleft--;
+   			}
+			if (per->pagesleft&127) per->pagesleft--;
    			if (((per->pagesleft&127) == 0) && (i == permtail))
    				permtail = ((permtail+1)&(MAXPERMS-1));
    		}
@@ -4086,7 +4087,7 @@ int loadpics(char *filename)
 		cachesize -= 65536L;
 		if (cachesize < 65536) return(-1);
 	}
-	printf("%d %d\n",artsize,cachesize);
+	printf("%ld %ld\n",artsize,cachesize);
 	initcache(((long)FP_OFF(pic)+15)&0xfffffff0,(cachesize-((-(long)FP_OFF(pic))&15))&0xfffffff0);
 
 	for(i=0;i<MAXTILES;i++)
@@ -4443,9 +4444,9 @@ static void ceilspritehline (long x2, long y)
 	long x1, v, bx, by;
 
 	/*
-	 * x = x1 + (x2-x1)t + (y1-y2)u  ³  x = 160v
-	 * y = y1 + (y2-y1)t + (x2-x1)u  ³  y = (scrx-160)v
-	 * z = z1 = z2                   ³  z = posz + (scry-horiz)v
+	 * x = x1 + (x2-x1)t + (y1-y2)u  Â³  x = 160v
+	 * y = y1 + (y2-y1)t + (x2-x1)u  Â³  y = (scrx-160)v
+	 * z = z1 = z2                   Â³  z = posz + (scry-horiz)v
      */
 
 	x1 = lastx[y]; if (x2 < x1) return;

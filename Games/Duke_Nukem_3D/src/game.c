@@ -2912,7 +2912,7 @@ void displayrooms(short snum,long smoothratio)
                 else
                     setviewtotile(MAXTILES-2,320L>>(1-ud.detail),320L>>(1-ud.detail));
                 if ((tang&1023) == 512)
-                {     //Block off unscreen section of 90ø tilted screen
+                {     //Block off unscreen section of 90Ã¸ tilted screen
                     j = ((320-60)>>(1-ud.detail));
                     for(i=(60>>(1-ud.detail))-1;i>=0;i--)
                     {
@@ -7391,7 +7391,7 @@ void writestring(long a1,long a2,long a3,short a4,long vx,long vy,long vz)
     fprintf(fp,"%ld %ld %ld %d %ld %ld %ld\n",a1,a2,a3,a4,vx,vy,vz);
 
     fflush(fp);
-    fsync(fp);
+    fsync(fileno(fp));
     fclose(fp);
 }
 
@@ -8027,8 +8027,8 @@ void closedemowrite(void)
             fwrite(&val32,sizeof(long),1,frecfilep);
             ud.recstat = ud.m_recstat = 0;
         }
-	fflush(frecfilep);
-	fsync(frecfilep);
+        fflush(frecfilep);
+        fsync(fileno(frecfilep));
         fclose(frecfilep);
         frecfilep = NULL;
     }
@@ -8959,6 +8959,9 @@ void dobonus(char bonusonly)
        260, 290,VICTORY1+5,86,59,
        290, 320,VICTORY1+6,86,59,
        320, 350,VICTORY1+7,86,59,
+       350, 380,VICTORY1+8,86,59,
+       // EXL, 03-Feb-2024: See eduke32 repository, f0f54437 commit state:
+       // https://voidpoint.io/terminx/eduke32/-/blob/master/source/duke3d/src/screens.cpp#L1833
        350, 380,VICTORY1+8,86,59
     };
 

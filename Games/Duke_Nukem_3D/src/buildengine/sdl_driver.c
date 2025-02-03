@@ -184,6 +184,7 @@ static char *titleshort = NULL;
 void restore256_palette (void);
 void set16color_palette (void);
 
+void sampletimer(void);
 
 static FILE *_sdl_debug_file = NULL;
 
@@ -372,10 +373,11 @@ static void init_new_res_vars(int davidoption)
 	activepage = visualpage = 0;
     horizlookup = horizlookup2 = NULL;
 
-    if (renderer == RENDERER_OPENGL3D)
+    if (renderer == RENDERER_OPENGL3D) {
         frameplace = (long) NULL;
-    else
+    } else {
         frameplace = (long) ( ((Uint8 *) surface->pixels) );
+    }
 
   	if (screen != NULL)
    	{
@@ -654,8 +656,10 @@ static int attempt_fullscreen_toggle(SDL_Surface **surface, Uint32 *flags)
         {
             if (pixels != NULL)
                 free(pixels);
+#if 0
             if (palette != NULL)
                 free(palette);
+#endif
             return(0);
         } /* if */
     } /* if */
@@ -938,7 +942,7 @@ static void handle_events(void)
 			if (key&sdlSDL_gp2x_keygp2x[i])
 			{
 				keysym.sym=sdlSDL_gp2x_key[i];
-				SDL_PrivateKeyboard(SDL_PRESSED,&keysym);
+//				SDL_PrivateKeyboard(SDL_PRESSED,&keysym);
 				sdlSDL_gp2x_key_old_status[i]=SDL_PRESSED;
 			}
 		}
@@ -947,7 +951,7 @@ static void handle_events(void)
 			if (!(key&sdlSDL_gp2x_keygp2x[i]))
 			{
 				keysym.sym=sdlSDL_gp2x_key[i];
-				SDL_PrivateKeyboard(SDL_RELEASED,&keysym);
+//				SDL_PrivateKeyboard(SDL_RELEASED,&keysym);
 				sdlSDL_gp2x_key_old_status[i]=SDL_RELEASED;
 			}
 		}
@@ -1591,8 +1595,9 @@ int screencapture(char *_filename, char inverseit)
                     S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
     }
 
-    if (fil == -1)
+    if (fil == -1) {
         return -1;
+    }
 
 	if (qsetmode == 200)
 	{
@@ -2434,8 +2439,9 @@ void drawline16(long XStart, long YStart, long XEnd, long YEnd, char Color)
     char *ScreenPtr;
     long dx, dy;
 
-    if (SDL_MUSTLOCK(surface))
+    if (SDL_MUSTLOCK(surface)) {
         SDL_LockSurface(surface);
+    }
 
 	dx = XEnd-XStart; dy = YEnd-YStart;
 	if (dx >= 0)

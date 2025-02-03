@@ -104,7 +104,7 @@ void getzsofslope(short sectnum, long dax, long day, long *ceilz, long *florz);
  * @param daaspect Sets the aspect ratio.
  * @remark Ken's Notes on this function:
  * \n---------------------\n
- * For a standard 90ø 320*200 screen, daxrange and daaspect are
+ * For a standard 90Ã¸ 320*200 screen, daxrange and daaspect are
  * 65536.  For square aspect ratio at 320*400, set daaspect
  * to 131072.  Since daxrange is actually zoom, you must
  * modify the aspect ratio inversely if you only want to

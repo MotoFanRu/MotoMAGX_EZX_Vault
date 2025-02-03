@@ -220,13 +220,13 @@ SPRITE VARIABLES:
 	EXTERN short nextspritesect[MAXSPRITES], nextspritestat[MAXSPRITES];
 
 	Example: if the linked lists look like the following:
-		 ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-		 ³      Sector lists:               Status lists:               ³
-		 ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
-		 ³  Sector0:  4, 5, 8             Status0:  2, 0, 8             ³
-		 ³  Sector1:  16, 2, 0, 7         Status1:  4, 5, 16, 7, 3, 9   ³
-		 ³  Sector2:  3, 9                                              ³
-		 ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+		 ĞªĞ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ñ—
+		 Ñ–      Sector lists:               Status lists:               Ñ–
+		 Ğ“Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ò‘
+		 Ñ–  Sector0:  4, 5, 8             Status0:  2, 0, 8             Ñ–
+		 Ñ–  Sector1:  16, 2, 0, 7         Status1:  4, 5, 16, 7, 3, 9   Ñ–
+		 Ñ–  Sector2:  3, 9                                              Ñ–
+		 ĞĞ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ”Ğ©
 	Notice that each number listed above is shown exactly once on both the
 		left and right side.  This is because any sprite that exists must
 		be in some sector, and must have some kind of status that you define.

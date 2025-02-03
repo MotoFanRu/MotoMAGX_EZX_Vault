@@ -716,8 +716,8 @@ int saveplayer(signed char spot)
      dfwrite(&global_random,sizeof(global_random),1,fil);
      dfwrite(&parallaxyscale,sizeof(parallaxyscale),1,fil);
 
-	 fflush(fil);
-	 fsync(fil);
+     fflush(fil);
+     fsync(fileno(fil));
          fclose(fil);
 
      if(ud.multimode < 2)

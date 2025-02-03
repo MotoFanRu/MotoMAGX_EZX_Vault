@@ -401,7 +401,7 @@ short getpacket (short *other, char *bufptr)
 				{
 								 /* GOOD! Take second half of double packet */
 #if (PRINTERRORS)
-					printf("\n%ld-%ld .û ",gcom->buffer[0],(gcom->buffer[0]+1)&255);
+					printf("\n%ld-%ld .Ã» ",gcom->buffer[0],(gcom->buffer[0]+1)&255);
 #endif
 					messleng = ((long)gcom->buffer[3]) + (((long)gcom->buffer[4])<<8);
 					lastpacketleng = gcom->numbytes-7-messleng;
@@ -421,7 +421,7 @@ short getpacket (short *other, char *bufptr)
 	if ((gcom->buffer[1]&128) == 0)           /* Single packet */
 	{
 #if (PRINTERRORS)
-		printf("\n%ld û  ",gcom->buffer[0]);
+		printf("\n%ld Ã»  ",gcom->buffer[0]);
 #endif
 
 		messleng = gcom->numbytes-5;
@@ -434,7 +434,7 @@ short getpacket (short *other, char *bufptr)
 
 														 /* Double packet */
 #if (PRINTERRORS)
-	printf("\n%ld-%ld ûû ",gcom->buffer[0],(gcom->buffer[0]+1)&255);
+	printf("\n%ld-%ld Ã»Ã» ",gcom->buffer[0],(gcom->buffer[0]+1)&255);
 #endif
 
 	messleng = ((long)gcom->buffer[3]) + (((long)gcom->buffer[4])<<8);
@@ -868,8 +868,8 @@ static int set_socket_blockmode(int onOrOff)
         if (onOrOff)
             flags &= ~O_NONBLOCK;
         else
-    	    flags |= O_NONBLOCK;
-	    rc = (fcntl(udpsocket, F_SETFL, flags) == 0);
+            flags |= O_NONBLOCK;
+        rc = (fcntl(udpsocket, F_SETFL, flags) == 0);
     }
 #endif
 
