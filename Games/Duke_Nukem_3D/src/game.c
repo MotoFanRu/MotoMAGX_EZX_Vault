@@ -2449,16 +2449,17 @@ void displayrest(long smoothratio)
 
 
     // is this what triggers going to menu? yes :)
-    if (KB_KeyPressed(sc_Enter)) {
-    //    if( KB_KeyPressed(sc_Escape) && ud.overhead_on == 0 
-    if( KB_KeyPressed(sc_Space) && ud.overhead_on == 0 
+//    if (KB_KeyPressed(sc_Enter)) {
+      if( KB_KeyPressed(sc_Escape) && ud.overhead_on == 0
+//    if( KB_KeyPressed(sc_Space) && ud.overhead_on == 0
         && ud.show_help == 0
         && ps[myconnectindex].newowner == -1)
     {
         if( (ps[myconnectindex].gm&MODE_MENU) == MODE_MENU && current_menu < 51)
         {
-            KB_ClearKeyDown(sc_Space);
-            KB_ClearKeyDown(sc_Enter);
+//            KB_ClearKeyDown(sc_Space);
+//            KB_ClearKeyDown(sc_Enter);
+            KB_ClearKeyDown(sc_Escape);
             ps[myconnectindex].gm &= ~MODE_MENU;
             if(ud.multimode < 2 && ud.recstat != 2)
             {
@@ -2474,8 +2475,9 @@ void displayrest(long smoothratio)
             ps[myconnectindex].newowner == -1 &&
             (ps[myconnectindex].gm&MODE_TYPE) != MODE_TYPE)
         {
-            KB_ClearKeyDown(sc_Space);
-            KB_ClearKeyDown(sc_Enter);
+//            KB_ClearKeyDown(sc_Space);
+//            KB_ClearKeyDown(sc_Enter);
+            KB_ClearKeyDown(sc_Escape);
             FX_StopAllSounds();
             clearsoundlocks();
 
@@ -2490,7 +2492,7 @@ void displayrest(long smoothratio)
             screenpeek = myconnectindex;
         }
     }
-    }
+//    }
 
     if(ps[myconnectindex].newowner == -1 && ud.overhead_on == 0 && ud.crosshair && ud.camerasprite == -1)
         rotatesprite((160L-(ps[myconnectindex].look_ang>>1))<<16,100L<<16,65536L,0,CROSSHAIR,0,0,2+1,windowx1,windowy1,windowx2,windowy2);

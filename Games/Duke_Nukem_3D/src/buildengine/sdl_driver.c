@@ -1456,7 +1456,7 @@ void _platform_init(int argc, char **argv, const char *title, const char *icon)
     scancodes[SDLK_9]               = 0x0A;
     scancodes[SDLK_0]               = 0x0B;
     scancodes[SDLK_MINUS]           = 0x0C; /* was 0x4A */
-    scancodes[SDLK_EQUALS]          = 0x0D; /* was 0x4E */
+    scancodes[SDLK_PLUS]            = 0x0D; /* was 0x4E */
     scancodes[SDLK_BACKSPACE]       = 0x0E;
     scancodes[SDLK_TAB]             = 0x0F;
     scancodes[SDLK_q]               = 0x10;
@@ -1468,7 +1468,7 @@ void _platform_init(int argc, char **argv, const char *title, const char *icon)
     scancodes[SDLK_u]               = 0x16;
     scancodes[SDLK_i]               = 0x17;
     scancodes[SDLK_o]               = 0x18;
-    scancodes[SDLK_p]               = 0x19;
+    scancodes[SDLK_PAUSE]           = 0x19;
     scancodes[SDLK_LEFTBRACKET]     = 0x1A;
     scancodes[SDLK_RIGHTBRACKET]    = 0x1B;
     scancodes[SDLK_RETURN]          = 0x1C;
@@ -1529,7 +1529,7 @@ void _platform_init(int argc, char **argv, const char *title, const char *icon)
     scancodes[SDLK_KP_PERIOD]       = 0x53;
     scancodes[SDLK_F11]             = 0x57;
     scancodes[SDLK_F12]             = 0x58;
-    scancodes[SDLK_PAUSE]           = 0x59; /* SBF - technically incorrect */
+    scancodes[SDLK_p]               = 0x59; /* SBF - technically incorrect */
 
     /* Some AZERTY keys... */
     scancodes[SDLK_AMPERSAND]       = 0x70;
