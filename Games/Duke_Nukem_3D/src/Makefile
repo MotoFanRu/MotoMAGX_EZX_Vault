@@ -9,8 +9,9 @@ freebsd := false
 solaris := false
 shareware := false
 controls_menu := true
-#use_asm := true
-
+use_asm := false
+STRIP?=strip
+MODERN_GCC?=false
 
 #-----------------------------------------------------------------------------#
 # If this makefile fails to detect Cygwin correctly, or you want to force
@@ -30,7 +31,6 @@ ifeq ($(strip $(beos)),true)
 endif
 
 # Don't touch anything below this line unless you know what you're doing.
-
 ifeq ($(strip $(cygwin)),autodetect)
   ifneq ($(strip $(shell gcc -v 2>&1 |grep "cygwin")),)
     cygwin := true
@@ -38,7 +38,6 @@ ifeq ($(strip $(cygwin)),autodetect)
     cygwin := false
   endif
 endif
-
 
 ifeq ($(strip $(cygwin)),true)
   ifeq ($(strip $(SDL_INC_DIR)),please_set_me_cygwin_users)
@@ -55,8 +54,8 @@ ifeq ($(strip $(cygwin)),true)
 
 else
   ifneq ($(strip $(freebsd)),true)
-    SDL_CFLAGS := $(shell /c/devkitGP2X/bin/sdl-config --cflags)
-    SDL_LDFLAGS := $(shell /c/devkitGP2X/bin/sdl-config --libs) -L.
+    SDL_CFLAGS := $(shell sdl-config --cflags)
+    SDL_LDFLAGS := $(shell sdl-config --libs) -L.
   endif
 endif
 
@@ -119,27 +118,34 @@ else
 	BUILDOBJS += buildengine/a.o
 endif
 
-CC =  /c/devkitGP2X/bin/arm-linux-gcc.exe
-LD =  /c/devkitGP2X/bin/arm-linux-g++.exe
+# EXL, 03-Feb-2025: Use environment for this.
+#CC =  gcc
+#LD =  g++
 #CC = /usr/local/open2x/bin/arm-linux-gnu-gcc
 
-CFLAGS = -c -g $(SDL_CFLAGS) -DUSE_SDL=1 -DPLATFORM_UNIX=1 -W -Wall -Wno-unused $(EXTRACFLAGS) -funsigned-char -DUDP_NETWORKING=1
+CFLAGS = -c -g $(SDL_CFLAGS) -DUSE_SDL=1 -DPLATFORM_UNIX=1 -DUDP_NETWORKING=1
+CFLAGS += -Wall -Wno-unused
+CFLAGS += $(EXTRACFLAGS)
+ifeq ($(strip $(MODERN_GCC)),true)
+CFLAGS += -Wno-unused-result -Wno-pointer-sign -Wno-stringop-overflow
+endif
 
+# EXL, 03-Feb-2025: We can't use `-O3` on EZX and probably MotoMAGX plaform since `-finline-functions` option is buggy.
 ifeq ($(strip $(macosx)),true)
 OPTIMIZE = -O3 -mdynamic-no-pic -falign-loops=16
 else
-OPTIMIZE = -O3
+OPTIMIZE = -O2 -pipe $(CPU_OPTIMIZE) -ffast-math -frename-registers
 endif
 
 # Always turn OFF strict aliasing, even when optimizing. Otherwise, this is
 #  just an accident waiting to happen...  --ryan.
-CFLAGS += -fno-strict-aliasing
+CFLAGS += -fno-strict-aliasing -funsigned-char
 
 # Uncomment this to compile with the Intel compiler (v6.0)
 #CC = icc
 #CFLAGS = -g $(SDL_CFLAGS) -DUSE_SDL=1 -DPLATFORM_UNIX=1 -DUSE_I386_ASM=1 $(EXTRACFLAGS) -O2
 
-LDLIBS = -lSDL_mixer -lvorbisidec -lmikmod -lm -lsmpeg -lpthread $(SDL_LDFLAGS) -lSDL $(EXTRALDFLAGS)
+LDLIBS = $(SDL_LDFLAGS) -lSDL -lSDL_mixer $(EXTRALDFLAGS)
 
 ifeq ($(strip $(freebsd)),true)
 LDLIBS = $(SDL_LDFLAGS) -lSDL_mixer $(EXTRALDFLAGS)
@@ -149,7 +155,6 @@ endif
 #LDLIBS += -Wl,-E
 
 all: duke3d
-
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(OPTIMIZE) -o $@ $<
@@ -166,10 +171,11 @@ animlib.o : animlib.c
 	$(CC) $(CFLAGS) -o $@ $<
 endif
 
-audiolib/audiolib.a:
-	$(MAKE) -C audiolib CC="$(CC)" CFLAGS="$(CFLAGS)" LDLIBS="$(LDLIBS)"
+# EXL, 03-Feb-2025: Disable audiolib building and linking.
+#audiolib/audiolib.a:
+#	$(MAKE) -C audiolib CC="$(CC)" CFLAGS="$(CFLAGS)" LDLIBS="$(LDLIBS)"
 
-duke3d: 	\
+duke3d: \
 	actors.o \
 	animlib.o \
 	control.o \
@@ -187,22 +193,23 @@ duke3d: 	\
 	sounds.o \
 	fx_man.o \
 	$(BUILDOBJS)
-	$(LD) -static $^ $(LDLIBS) -o $@
-	 /c/devkitGP2X/bin/arm-linux-strip.exe -o duke3d.gpe duke3d
+	$(CC) $^ $(LDLIBS) -o $@
+	$(STRIP) -s duke3d
 
 build: astub.o
 	$(CC) $^ $(BUILDOBJS) buildengine/build.o $(LDLIBS) -o $@
 
 clean:
-	$(MAKE) -C audiolib clean
-	rm -rf duke3d duke3d.gpe build *.o
+#	$(MAKE) -C audiolib clean
+#	rm -rf duke3d.gpe
+	rm -rf duke3d build *.o
+	rm -rf buildengine/*.o
 
 distclean: clean
-	$(MAKE) -C audiolib distclean
+#	$(MAKE) -C audiolib distclean
 	rm -rf *~
 
-
-install: duke3d.gpe
-	mount /mnt/flash
-	cp duke3d.gpe /mnt/flash/duke3d/duke3d.gpe
-	umount /mnt/flash
+#install: duke3d.gpe
+#	mount /mnt/flash
+#	cp duke3d.gpe /mnt/flash/duke3d/duke3d.gpe
+#	umount /mnt/flash
