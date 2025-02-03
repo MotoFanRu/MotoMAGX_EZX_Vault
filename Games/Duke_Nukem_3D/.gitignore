@@ -1,0 +1,4 @@
+*.o
+*.obj
+libSDL_mixer.so
+duke3d
