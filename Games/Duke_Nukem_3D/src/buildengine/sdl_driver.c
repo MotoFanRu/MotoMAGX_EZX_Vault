@@ -60,6 +60,11 @@ const char *renderer_name[RENDERER_TOTAL];
 
 static sdl_renderer_type renderer = RENDERER_SOFTWARE;
 
+#if defined(EZX) || defined(MAGX)
+#define RELEASE_KEYS_FROM_X_FRAMES (3)
+static int release_key_delay_ezx_motomagx_hack = 0;
+#endif
+
 /* !!! ugh. Clean this up. */
 #if (!defined __WATCOMC__)
 #include "a.h"
@@ -737,8 +742,11 @@ static __inline int handle_keypad_enter_hack(const SDL_Event *event)
 
 static int sdl_key_filter(const SDL_Event *event)
 {
-    SDL_GrabMode grab_mode = SDL_GRAB_OFF;
     int extended;
+
+// EXL, 03-Feb-2025: Drop this trash for EZX and MotoMAGX build.
+#if !(defined(EZX) || defined(MAGX))
+    SDL_GrabMode grab_mode = SDL_GRAB_OFF;
     int tmp;
 
     #if PLATFORM_MACOSX  /* Apple-Q */
@@ -758,7 +766,6 @@ static int sdl_key_filter(const SDL_Event *event)
         }
     }
     #endif
-
 
     if ( (event->key.keysym.sym == SDLK_g) &&
          (event->key.state == SDL_PRESSED) &&
@@ -783,6 +790,7 @@ static int sdl_key_filter(const SDL_Event *event)
             frameplace = (long) surface->pixels;
         return(0);
     } /* if */
+#endif
 
     if (!handle_keypad_enter_hack(event))
         lastkey = scancodes[event->key.keysym.sym];
@@ -798,8 +806,17 @@ static int sdl_key_filter(const SDL_Event *event)
         lastkey = (scancodes[event->key.keysym.sym] & 0xFF);
     } /* if */
 
-    if (event->key.state == SDL_RELEASED)
+    if (event->key.state == SDL_RELEASED) {
+#if defined(EZX) || defined(MAGX)
+        if (!((event->key.keysym.sym == SDLK_ESCAPE) || (event->key.keysym.sym == SDLK_SPACE))) { /* EZX and MOTOMAGX */
+            lastkey += 128;  /* +128 signifies that the key is released in DOS. */
+        } else {
+            release_key_delay_ezx_motomagx_hack = RELEASE_KEYS_FROM_X_FRAMES;
+        }
+#else
         lastkey += 128;  /* +128 signifies that the key is released in DOS. */
+#endif
+    }
 
     keyhandler();
     return(0);
@@ -964,6 +981,26 @@ static void handle_events(void)
 
     while (SDL_PollEvent(&event))
         root_sdl_event_filter(&event);
+
+#if defined(EZX) || defined(MAGX)
+    { /* EZX & MotoMAGX hack for proper `SDLK_ESCAPE` and `SDLK_SPACE` handling. */
+        if (release_key_delay_ezx_motomagx_hack >= 0) {
+            release_key_delay_ezx_motomagx_hack--;
+
+            if (release_key_delay_ezx_motomagx_hack == 0) {
+                fprintf(stderr, "EZX & MotoMAGX: Clear SDLK_ESCAPE and SDLK_SPACE Keys!\n");
+                lastkey = scancodes[SDLK_ESCAPE] + 128;
+                keyhandler();
+                lastkey = scancodes[SDLK_SPACE] + 128;
+                keyhandler();
+            }
+
+            if (release_key_delay_ezx_motomagx_hack < 0) {
+                release_key_delay_ezx_motomagx_hack = 0;
+            }
+        }
+    }
+#endif
 
     sampletimer();
 

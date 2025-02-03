@@ -129,12 +129,13 @@ CFLAGS += $(EXTRACFLAGS)
 ifeq ($(strip $(MODERN_GCC)),true)
 CFLAGS += -Wno-unused-result -Wno-pointer-sign -Wno-stringop-overflow
 endif
+CFLAGS += $(FLAGS)
 
 # EXL, 03-Feb-2025: We can't use `-O3` on EZX and probably MotoMAGX plaform since `-finline-functions` option is buggy.
 ifeq ($(strip $(macosx)),true)
 OPTIMIZE = -O3 -mdynamic-no-pic -falign-loops=16
 else
-OPTIMIZE = -O2 -pipe $(CPU_OPTIMIZE) -ffast-math -frename-registers
+OPTIMIZE = -O2 -pipe -ffast-math -frename-registers
 endif
 
 # Always turn OFF strict aliasing, even when optimizing. Otherwise, this is
