@@ -15,11 +15,19 @@ Duke Nukem 3D is a classic first-person shooter originally developed by 3D Realm
 
 ## Photos
 
+![Duke Nukem 3D Photo 01 on Motorola ROKR E6 and Motorola VE66, EZX and MotoMAGX phones](pic/Duke_Nukem_3D_EZX_E6_MotoMAGX_VE66_01.jpg)
+
+![Duke Nukem 3D Photo 02 on Motorola ROKR E6 and Motorola VE66, EZX and MotoMAGX phones](pic/Duke_Nukem_3D_EZX_E6_MotoMAGX_VE66_02.jpg)
+
 ![Duke Nukem 3D Photo 03 on Motorola ROKR E6 and Motorola VE66, EZX and MotoMAGX phones](pic/Duke_Nukem_3D_EZX_E6_MotoMAGX_VE66_03.jpg)
+
+## Download
+
+TODO:
 
 ## Install
 
-Just intall package and place **duke3d.grp** file from Shareware or Full version next to **duke3d** executable. If you want to use Atomic version then copy *.con files from "cons_atomic" directory next to **duke3d** executable.
+Simply install the package and place the **duke3d.grp** file next to the **duke3d** executable. Some custom versions may require *.con files from the "cons_general" and "cons_atomic" directories next to the **duke3d** executable.
 
 ### MD5 Checksums and Sizes
 
@@ -29,9 +37,11 @@ c03558e3a78d1c5356dc69b6134c5b55 11035779 duke3d.grp # Shareware version.
 22b6938fe767e5cc57d1fe13080cd522 44356548 duke3d.grp # Atomic version.
 ```
 
+These **duke3d.grp** files were tested.
+
 ## Controls
 
-All control keys/buttons can be rebinded in the "Options" => "Controls..." menu.
+All control keys/buttons can be changed in the "Options" => "Controls..." menu.
 
 ### EZX (Motorola ROKR E6)
 
@@ -55,7 +65,7 @@ All control keys/buttons can be rebinded in the "Options" => "Controls..." menu.
 | Next Weapon       | "Backward"        |                   |
 | Back/Esc          | "End"             |                   |
 
-The "Mod" key on the Motorola MING A1200 is located between "Vol -" and "Vol +" keys, and on the ROKR E6 it is under "End" button.
+The "Mod" key on the Motorola MING A1200 is located between the "Vol -" and "Vol +" keys, and on the ROKR E6 it is under the "End" button.
 
 ### MotoMAGX (Motorola VE66)
 
@@ -140,11 +150,12 @@ cd res
 
 - [Native Games for MING A1200 and ROKR E6, All games here](https://forum.motofan.ru/index.php?showtopic=139322) (in Russian)
 - [Native Games and Emulators for ZINE ZN5, MGX/PEP-packages](https://forum.motofan.ru/index.php?showtopic=170514) (in Russian)
-- [Open Handhelds File Archive](https://dl.openhandhelds.org/cgi-bin/gp2x.cgi?0,0,0,0,20,956)
+- [Open Handhelds File Archive](https://dl.openhandhelds.org/cgi-bin/gp2x.cgi?0,0,0,0,20,956) (GP2X)
 
 ## Credits
 
-- Original Duke Nukem 3D by 3D Realms.
-- icculus port to UNIX-like system.
+- Original Duke Nukem 3D game by 3D Realms.
+- [Build engine](https://advsys.net/ken/build.htm) by Ken Silverman.
+- Port to UNIX-like systems by icculus.
 - GP2X port (Duke2X) by Woogal at [Sector808](http://www.sector808.org/gp2x/duke-nukem-3d-duke2x/).
 - EZX and MotoMAGX port by EXL.
