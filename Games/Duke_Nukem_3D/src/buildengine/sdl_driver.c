@@ -1550,8 +1550,13 @@ void _platform_init(int argc, char **argv, const char *title, const char *icon)
     scancodes[SDLK_g]               = 0x22;
     scancodes[SDLK_h]               = 0x23;
     scancodes[SDLK_j]               = 0x24;
+#if defined(MAGX)
     scancodes[SDLK_ASTERISK]        = 0x25;
     scancodes[SDLK_HASH]            = 0x26;
+#else
+    scancodes[SDLK_k]               = 0x25;
+    scancodes[SDLK_l]               = 0x26;
+#endif
     scancodes[SDLK_SEMICOLON]       = 0x27;
     scancodes[SDLK_QUOTE]           = 0x28;
     scancodes[SDLK_BACKQUOTE]       = 0x29;
