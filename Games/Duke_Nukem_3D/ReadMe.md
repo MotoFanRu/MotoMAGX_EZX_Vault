@@ -21,13 +21,21 @@ Duke Nukem 3D is a classic first-person shooter originally developed by 3D Realm
 
 ![Duke Nukem 3D Photo 03 on Motorola ROKR E6 and Motorola VE66, EZX and MotoMAGX phones](pic/Duke_Nukem_3D_EZX_E6_MotoMAGX_VE66_03.jpg)
 
+## Videos
+
+- See [Duke Nukem 3D on Motorola VE66 and Motorola ROKR E6](https://youtu.be/lpoxch6yz_s) on YouTube.
+
 ## Download
 
-TODO:
+- [Native Games for MING A1200 and ROKR E6, All games here](https://forum.motofan.ru/index.php?showtopic=139322) (in Russian)
+- [Native Games and Emulators for ZINE ZN5, MGX/PEP-packages](https://forum.motofan.ru/index.php?showtopic=170514) (in Russian)
+- https://firmware.center/projects/EXL/LinuxMoto2025/
+- https://limowski.space/downloads/MotoMAGX/2025
+- https://share.mentality.rip/pub/motonative/MotoLinuxNative/2025
 
 ## Install
 
-Simply install the package and place the **duke3d.grp** file next to the **duke3d** executable. Some custom versions may require *.con files from the "cons_general" and "cons_atomic" directories next to the **duke3d** executable.
+Install the SDL libraries first (see instructions in the links above), then simply install the Duke Nukem 3D package and place the **duke3d.grp** file next to the **duke3d** executable. Some custom versions may require \*.con files from the "cons_general" and "cons_atomic" directories next to the **duke3d** executable. The "Shareware" version is already included in the packages.
 
 ### MD5 Checksums and Sizes
 
@@ -130,7 +138,7 @@ cd res
 
 ## Build Recipe for MotoMAGX
 
-```
+```bash
 cd src
 
 . /opt/toolchains/motomagx/setenv-z6.sh
@@ -146,16 +154,10 @@ cd res
 ./create_mgx.sh
 ```
 
-## Useful Links
-
-- [Native Games for MING A1200 and ROKR E6, All games here](https://forum.motofan.ru/index.php?showtopic=139322) (in Russian)
-- [Native Games and Emulators for ZINE ZN5, MGX/PEP-packages](https://forum.motofan.ru/index.php?showtopic=170514) (in Russian)
-- [Open Handhelds File Archive](https://dl.openhandhelds.org/cgi-bin/gp2x.cgi?0,0,0,0,20,956) (GP2X)
-
 ## Credits
 
 - Original Duke Nukem 3D game by 3D Realms.
 - [Build engine](https://advsys.net/ken/build.htm) by Ken Silverman.
 - Port to UNIX-like systems by icculus.
-- GP2X port (Duke2X) by Woogal at [Sector808](http://www.sector808.org/gp2x/duke-nukem-3d-duke2x/).
+- GP2X port ([Duke2X](https://dl.openhandhelds.org/cgi-bin/gp2x.cgi?0,0,0,0,20,956)) by Woogal at [Sector808](http://www.sector808.org/gp2x/duke-nukem-3d-duke2x/).
 - EZX and MotoMAGX port by EXL.
